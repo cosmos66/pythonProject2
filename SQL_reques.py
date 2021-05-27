@@ -57,9 +57,9 @@ def build_sql(_engine,
         print("Unexpected error:", sys.exc_info()[0])
         raise
 
-    _dic_type_change = {'binary': 1,
-                        'datetime': 120,
-                        'noraml': ['nchar', 'nvarchar', 'numeric']} #словарики под типы с заменами
+    _dic_type_change = {'binary': ['VARCHAR(60)',1],
+                        'datetime':['DATE', 112],
+                        'noraml': ['nchar', 'nvarchar', 'numeric','ntext']} #словарики под типы с заменами
     # _list_type_norm = ['nchar', 'nvarchar', 'numeric'] # типы которые можно не приобразовывать
     #Надо тут написать проверку на всякую муть
     if _col_name!="*":
@@ -79,10 +79,14 @@ def build_sql(_engine,
                              .format(x, _voc_check[x])
            elif y in _dic_type_change.keys():
                _sql_reqest = _sql_reqest +'\n' + \
-                             "CONVERT (VARCHAR(60),{},{}) as {},"\
-                             .format(x,_dic_type_change[y], _voc_check[x])
+                             "CONVERT ({},{},{}) as {},"\
+                             .format(_dic_type_change[y][0],
+                                     x,
+                                     _dic_type_change[y][1],
+                                      _voc_check[x])
            else:
-               raise ValueError('Неверно указан тип данных SQL, {} добавляй в словарь'.format(y))
+               raise ValueError('Неверно указан тип данных SQL,'
+                                ' "{}" тип Столбец "{}" или "{}" добавляй в словарь'.format(y,x,_voc_check[x]))
 
     _sql_reqest=_sql_reqest[:-1]+"\nFROM juvelirochka_DAILY.{}\n{} ".format(_ms_df,_condit)
     return _sql_reqest
