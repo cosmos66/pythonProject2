@@ -15,10 +15,10 @@ def get_data_from_db(_month, _where,
 
     # Подключение к тонелю
     with SSHTunnelForwarder(
-            ('92.242.47.188', 2200),
-            ssh_username="sdemyanosov",
-            ssh_password="5rC6RwWD",
-            remote_bind_address=('localhost', 3306),
+            ('9', 2200),
+            ssh_username="s",
+            ssh_password="5
+      remote_bind_address=('localhost', 3306),
     ) as server:
 
         if server.local_bind_port > 0:
@@ -30,8 +30,8 @@ def get_data_from_db(_month, _where,
         # подключение к базе
         mydb = mysql.connector.connect(
             host="localhost",
-            user="sdemyanosov",
-            password="j8N9GhR7g3",
+            user="s",
+            password="j",
             port=server.local_bind_port,
             db='ua_juvelir'
         )
