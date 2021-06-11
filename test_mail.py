@@ -1,5 +1,5 @@
 from datetime import datetime
-path=r'C:\Users\sdemyanosov\Desktop\'test.txt'
+path=r'C:\Users\Desktop\'test.txt'
 with open(path, "w") as file:
     file.write(datetime.now().strftime("%H:%M:%S"))
 
