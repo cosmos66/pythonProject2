@@ -1,20 +1,23 @@
-from configparser import ConfigParser
-# config_object = ConfigParser()
-# config_object["USERINFO"] = {
-#     "admin": "Chankey Pathak",
-#     "loginid": "chankeypathak",
-#     "password": "tutswiki"
-# }
-# with open('config.ini', 'w') as conf:
-#     config_object.write(conf)
+from datetime import datetime
+from time import sleep
 
-config_object = ConfigParser()
-config_object.read("config.ini")
 
-#Get the password
-userinfo = config_object["USERINFO"]
-print("admin is {}".format(userinfo["admin"]))
-print("Password is {}".format(userinfo["password"]))
-config_object["USERINFO"]["password"]="new_bal"
-with open('config.ini', 'w') as conf:
-    config_object.write(conf)
+def filln(func):
+    def wrapper(a,*args,**kwargs):
+        t1=datetime.now()
+        sleep(1)
+        a=8
+        z=func(a,*args,**kwargs)
+        # print(datetime.now()-t1)
+        z=z+1 if z==9 else z
+        print(f"Finished {func.__name__!r} in {datetime.now()-t1} secs")
+        return z
+
+    return wrapper
+
+
+@filln
+def sumsome(a, b):
+    return a+b
+
+print(sumsome(5,4))
